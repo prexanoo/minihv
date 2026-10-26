@@ -271,11 +271,3 @@ const char *program_path(const Program *prog)
 {
     return prog->path;
 }
-
-const char *opcode_name(Opcode op)
-{
-    static const char *const NAMES[] = {"MOV",  "ADD",   "ADDI", "SUB", "LOAD",
-                                        "LOAD", "STORE", "STORE", "JMP", "JZ",
-                                        "JNZ",  "OUT",   "DISK", "NET", "HALT"};
-    return NAMES[op];
-}

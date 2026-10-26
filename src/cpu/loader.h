@@ -46,6 +46,5 @@ void program_destroy(Program *prog);
 int program_len(const Program *prog);
 const Instr *program_at(const Program *prog, int i);
 const char *program_path(const Program *prog);
-const char *opcode_name(Opcode op);
 
 #endif

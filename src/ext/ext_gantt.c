@@ -45,9 +45,6 @@ void ext_destroy(Ext *ext)
     free(ext);
 }
 
-const char *ext_name(void) { return "GANTT"; }
-bool ext_enabled(const Ext *ext) { return ext->enabled; }
-
 const char *ext_help(void)
 {
     return "  gantt             mostra o diagrama de Gantt ate o tick atual (recurso extra)\n";

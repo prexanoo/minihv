@@ -25,8 +25,6 @@ void log_write(Logger *lg, uint64_t tick, LogLevel lv, const char *module,
 
 bool log_level_parse(const char *s, LogLevel *out);
 bool log_format_parse(const char *s, LogFormat *out);
-const char *log_level_name(LogLevel lv);
-const char *log_format_name(LogFormat fmt);
 const char *log_default_file(LogFormat fmt);
 
 #endif

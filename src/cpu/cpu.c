@@ -42,7 +42,6 @@ void cpu_destroy(Cpu *cpu)
     free(cpu);
 }
 
-int cpu_count(const Cpu *cpu) { return cpu->n; }
 Vcb *cpu_current(const Cpu *cpu, int i) { return cpu->p[i].vm; }
 int32_t cpu_pc(const Cpu *cpu, int i) { return cpu->p[i].pc; }
 uint64_t cpu_busy_ticks(const Cpu *cpu, int i) { return cpu->p[i].busy; }

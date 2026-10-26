@@ -21,9 +21,6 @@ typedef struct Ext Ext;
 Ext *ext_create(const ExtConfig *cfg);
 void ext_destroy(Ext *ext);
 
-const char *ext_name(void);
-bool ext_enabled(const Ext *ext);
-
 /* callback inscrito no hv */
 void ext_on_event(void *ctx, const Event *ev);
 

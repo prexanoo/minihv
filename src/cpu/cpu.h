@@ -23,7 +23,6 @@ typedef struct Cpu Cpu;
 Cpu *cpu_create(int n, const EventSink *sink);
 void cpu_destroy(Cpu *cpu);
 
-int cpu_count(const Cpu *cpu);
 Vcb *cpu_current(const Cpu *cpu, int i);
 int32_t cpu_pc(const Cpu *cpu, int i);
 

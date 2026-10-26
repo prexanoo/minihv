@@ -163,16 +163,6 @@ bool log_format_parse(const char *s, LogFormat *out)
     return false;
 }
 
-const char *log_level_name(LogLevel lv)
-{
-    return LEVEL_NAMES[lv];
-}
-
-const char *log_format_name(LogFormat fmt)
-{
-    return FORMAT_NAMES[fmt];
-}
-
 const char *log_default_file(LogFormat fmt)
 {
     return DEFAULT_FILES[fmt];
