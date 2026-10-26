@@ -13,6 +13,7 @@
 #define PATH_LEN 256
 #define MIN_TICKS 256
 #define LABEL_W 7
+#define MAX_NAMES 64 /* mesmo limite de VMs do hv.conf (CFG_MAX_VMS) */
 
 struct Ext {
     bool enabled;
@@ -21,8 +22,7 @@ struct Ext {
     int *cells; /* cells[tick * pcpus + cpu] = id da VM ou NO_VM */
     size_t cap_ticks;
     size_t n_ticks;
-    char (*names)[NAME_LEN];
-    int n_names;
+    char names[MAX_NAMES][NAME_LEN]; /* nome de cada VM pelo id ("" = ainda nao vista) */
 };
 
 Ext *ext_create(const ExtConfig *cfg)
@@ -41,7 +41,6 @@ void ext_destroy(Ext *ext)
     if (!ext)
         return;
     free(ext->cells);
-    free(ext->names);
     free(ext);
 }
 
@@ -67,22 +66,6 @@ static bool ensure_ticks(Ext *ext, size_t tick)
     return true;
 }
 
-static void save_name(Ext *ext, int id, const char *name)
-{
-    if (id < 0)
-        return;
-    if (id >= ext->n_names) {
-        int n = id + 8;
-        char(*novo)[NAME_LEN] = realloc(ext->names, (size_t)n * sizeof *novo);
-        if (!novo)
-            return;
-        memset(novo + ext->n_names, 0, (size_t)(n - ext->n_names) * sizeof *novo);
-        ext->names = novo;
-        ext->n_names = n;
-    }
-    snprintf(ext->names[id], NAME_LEN, "%s", name);
-}
-
 void ext_on_event(void *ctx, const Event *ev)
 {
     Ext *ext = ctx;
@@ -91,8 +74,8 @@ void ext_on_event(void *ctx, const Event *ev)
     switch (ev->type) {
     case EV_EXEC:
         /* o ext e criado depois das VMs (RF-HV-01), entao o nome vem daqui */
-        if (ev->vm_id >= ext->n_names || !ext->names[ev->vm_id][0])
-            save_name(ext, ev->vm_id, ev->vm);
+        if (ev->vm_id >= 0 && ev->vm_id < MAX_NAMES)
+            snprintf(ext->names[ev->vm_id], NAME_LEN, "%s", ev->vm);
         if (ev->cpu >= 0 && ev->cpu < ext->pcpus && ensure_ticks(ext, (size_t)ev->tick))
             ext->cells[ev->tick * (uint64_t)ext->pcpus + (uint64_t)ev->cpu] = ev->vm_id;
         break;
@@ -151,7 +134,7 @@ static void print_block(const Ext *ext, FILE *out, size_t ini, size_t fim)
 static void print_legend(const Ext *ext, FILE *out)
 {
     fputs("legenda:", out);
-    for (int i = 0; i < ext->n_names; i++)
+    for (int i = 0; i < MAX_NAMES; i++)
         if (ext->names[i][0])
             fprintf(out, " %c=%s", vm_char(i), ext->names[i]);
     fprintf(out, " %c=ociosa\n", GANTT_IDLE);
@@ -179,7 +162,7 @@ static void write_csv(const Ext *ext)
     for (size_t t = 0; t < ext->n_ticks; t++) {
         for (int c = 0; c < ext->pcpus; c++) {
             int id = ext->cells[t * (size_t)ext->pcpus + (size_t)c];
-            const char *nome = (id >= 0 && id < ext->n_names) ? ext->names[id] : "-";
+            const char *nome = (id >= 0 && id < MAX_NAMES) ? ext->names[id] : "-";
             fprintf(fp, "%llu,%d,%s\n", (unsigned long long)t, c, nome);
         }
     }

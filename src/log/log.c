@@ -16,7 +16,6 @@ static const char *const DEFAULT_FILES[] = {"out/minihv.log", "out/minihv.csv",
 
 #define N_LEVELS 4
 #define N_FORMATS 3
-#define LOG_BUF_SIZE (64 * 1024)
 
 Logger *log_create(void)
 {
@@ -48,8 +47,6 @@ HvStatus log_open(Logger *lg, LogFormat fmt, LogLevel min, const char *path)
         fprintf(stderr, "erro: nao consegui criar o log '%s' (a pasta existe?)\n", path);
         return HV_ERR_IO;
     }
-    /* buffer maior: o log tem dezenas de milhares de linhas (RNF-05) */
-    setvbuf(lg->fp, NULL, _IOFBF, LOG_BUF_SIZE);
     if (fmt == LOG_FMT_CSV)
         fputs("tick,level,module,vm,event,detail\n", lg->fp);
     return HV_OK;
