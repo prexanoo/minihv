@@ -1,0 +1,7 @@
+minihv
+build/
+out/
+*.o
+*.d
+*.exe
+docs/~$*
