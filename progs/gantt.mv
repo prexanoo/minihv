@@ -1,0 +1,11 @@
+; gantt.mv - rajadas de CPU separadas por E/S, para o diagrama de Gantt
+; mostrar a VM saindo e voltando para as pCPUs (recurso extra)
+MOV R0, 3        ; 0  rajadas
+MOV R1, 1        ; 1
+MOV R2, 6        ; 2  tamanho da rajada
+SUB R2, R1       ; 3
+JNZ R2, 3        ; 4
+OUT R0           ; 5
+SUB R0, R1       ; 6
+JNZ R0, 2        ; 7
+HALT             ; 8

@@ -1,0 +1,12 @@
+; io_pesado.mv - quase so E/S: console, disco e rede em cada volta
+MOV R0, 5      ; 0  voltas
+MOV R1, 1      ; 1
+MOV R2, 37     ; 2  cilindro inicial
+MOV R3, 41     ; 3  passo entre cilindros
+OUT R0         ; 4
+DISK R2        ; 5
+ADD R2, R3     ; 6  37, 78, 119, 160, 201 (201 mod 200 = 1)
+NET 16         ; 7  16 palavras -> 2 + 2 = 4 ticks
+SUB R0, R1     ; 8
+JNZ R0, 4      ; 9
+HALT           ; 10

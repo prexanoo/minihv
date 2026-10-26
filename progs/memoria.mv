@@ -1,0 +1,16 @@
+; memoria.mv - escreve 64 palavras da area de dados e depois le todas
+; de volta. Precisa de mem_words >= 80.
+MOV R0, 16       ; 0  primeiro endereco de dados (codigo ocupa 0..13)
+MOV R1, 1        ; 1  constante
+MOV R2, 64       ; 2  palavras restantes
+STORE R0, [R0]   ; 3  mem[R0] = R0
+ADD R0, R1       ; 4
+SUB R2, R1       ; 5
+JNZ R2, 3        ; 6
+MOV R2, 64       ; 7
+SUB R0, R1       ; 8  volta um endereco
+LOAD R3, [R0]    ; 9
+SUB R2, R1       ; 10
+JNZ R2, 8        ; 11
+OUT R3           ; 12 o ultimo lido e mem[16], entao imprime 16
+HALT             ; 13

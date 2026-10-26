@@ -1,0 +1,7 @@
+; cpu_curto.mv - so CPU, nenhuma E/S. Usado no TA-02 e nos testes.
+; executa 2 + 2*10 + 1 = 23 instrucoes (23 ticks de CPU)
+MOV R0, 10     ; 0
+MOV R1, 1      ; 1
+SUB R0, R1     ; 2
+JNZ R0, 2      ; 3
+HALT           ; 4

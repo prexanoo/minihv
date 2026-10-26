@@ -1,0 +1,8 @@
+; protecao.mv - le um endereco fora do proprio espaco
+; a VM deve terminar com PROTECTION_FAULT sem afetar as outras
+MOV R0, 7        ; 0
+OUT R0           ; 1  imprime 7 antes de dar erro
+MOV R1, 5000     ; 2  bem acima de mem_words
+LOAD R2, [R1]    ; 3  <- PROTECTION_FAULT aqui
+OUT R2           ; 4  nunca executa
+HALT             ; 5

@@ -1,0 +1,12 @@
+; disco.mv - acessa cilindros espalhados para exercitar o C_LOOK
+MOV R0, 183      ; 0
+DISK R0          ; 1
+MOV R0, 14       ; 2
+DISK R0          ; 3
+MOV R0, 122      ; 4
+DISK R0          ; 5
+MOV R0, 65       ; 6
+DISK R0          ; 7
+MOV R0, 98       ; 8
+DISK R0          ; 9
+HALT             ; 10

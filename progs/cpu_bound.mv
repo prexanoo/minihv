@@ -1,0 +1,10 @@
+; cpu_bound.mv - soma 40 + 39 + ... + 1 sem fazer E/S no meio
+; executa 3 + 40*3 + 1 = 124 instrucoes ate o OUT final
+MOV R0, 40     ; 0  contador
+MOV R1, 1      ; 1  constante
+MOV R2, 0      ; 2  acumulador
+ADD R2, R0     ; 3
+SUB R0, R1     ; 4
+JNZ R0, 3      ; 5
+OUT R2         ; 6  imprime 820
+HALT           ; 7

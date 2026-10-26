@@ -1,0 +1,5 @@
+; loop.mv - laco infinito sem E/S, so termina por max_ticks ou kill
+MOV R0, 0        ; 0
+ADDI R0, 1       ; 1
+STORE R0, 20     ; 2
+JMP 1            ; 3

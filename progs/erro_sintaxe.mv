@@ -1,0 +1,4 @@
+; erro_sintaxe.mv - programa invalido de proposito (TA-06)
+MOV R0, 3
+ADD R0, R9       ; registrador que nao existe
+HALT
